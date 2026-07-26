@@ -1,5 +1,5 @@
 # DocsAndDragons - Consulta D&D 5E
-[Read in English](README.en.md) /
+[Read in English](README.en.md) \
 Uma fonte de consulta dos materiais-base de "Dungeons and Dragons" 5ª edição.
 
 > Criado para ajudar jogadores e mestres a encontrar **regras** e **referências** rapidamente, com pesquisa inteligente e flexível. Não é necessário criar conta para utilizar.
