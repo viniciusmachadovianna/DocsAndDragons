@@ -1,0 +1,11 @@
+[
+  {
+    "id": "espada-longa",
+    "name": "Espada Longa",
+    "category": "Armas Marciais",
+    "cost": "15 po",
+    "damage": "1d8 cortante",
+    "weight": "1.5 kg",
+    "properties": ["Versátil (1d10)"]
+  }
+]

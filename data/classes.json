@@ -1,0 +1,10 @@
+[
+  {
+    "id": "mago",
+    "name": "Mago",
+    "hitDie": "d6",
+    "primaryAbility": "Inteligência",
+    "savingThrows": ["Inteligência", "Sabedoria"],
+    "description": "Um usuário de magia erudito capaz de manipular a realidade..."
+  }
+]

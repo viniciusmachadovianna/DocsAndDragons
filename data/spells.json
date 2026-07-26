@@ -1,0 +1,23 @@
+[
+  {
+    "id": "bola-de-fogo",
+    "name": "Bola de Fogo",
+    "level": 3,
+    "school": "Evocação",
+    "description": "Uma rajada brilhante dispara do seu dedo..."
+  },
+  {
+    "id": "curar-ferimentos",
+    "name": "Curar Ferimentos",
+    "level": 1,
+    "school": "Evocação",
+    "description": "Uma criatura que você tocar recupera pontos de vida..."
+  },
+  {
+    "id": "protecao-contra-o-bem-e-mal",
+    "name": "Proteção contra o Bem e Mal",
+    "level": 1,
+    "school": "Adivinhação",
+    "description": "Até a magia acabar, uma criatura voluntária..."
+  }
+]
