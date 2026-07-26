@@ -1,5 +1,5 @@
 # DocsAndDragons - D&D 5E Reference
-[Leia em Português](README.pt-br.md)
+[Leia em Português](README.md) /
 A quick reference for core materials of Dungeons & Dragons, 5th Edition.
 
 > This application is designed to help players and DMs quickly find **rules** and **references** using a smart, non-AI search.
