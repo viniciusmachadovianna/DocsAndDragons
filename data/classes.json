@@ -2,6 +2,7 @@
   {
     "id": "mago",
     "name": "Mago",
+    "codexCategory": "Class",
     "hitDie": "d6",
     "primaryAbility": "Inteligência",
     "savingThrows": ["Inteligência", "Sabedoria"],

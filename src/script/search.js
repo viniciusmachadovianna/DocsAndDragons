@@ -11,4 +11,5 @@ function normalizeText(txt) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-DOM.searchInput.addEventListener('input', handleSearchInput)
+let searchKeyword = DOM.searchInput.value;
+// DOM.searchInput.addEventListener('input', handleSearchInput(searchKeyword))

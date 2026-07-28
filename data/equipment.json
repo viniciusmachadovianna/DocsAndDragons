@@ -2,6 +2,7 @@
   {
     "id": "espada-longa",
     "name": "Espada Longa",
+    "codexCategory": "Equipment",
     "category": "Armas Marciais",
     "cost": "15 po",
     "damage": "1d8 cortante",
