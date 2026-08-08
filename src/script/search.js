@@ -1,7 +1,3 @@
-/**
- * @fileoverview
- *
- */
 
 // --- CONFIG --- //
 const DOM = {
@@ -11,7 +7,7 @@ const DOM = {
 
 // --- MAIN --- //
 
-let activeFilters = ["class", "equipment", "spell"]
+const activeFilters = new Set(["class", "equipment", "spell"]);
 
 async function loadCategoryItems(category) {
 
@@ -50,11 +46,11 @@ function filterItems(searchKeyword, categories=null){
 function changeFilters(tgt){
     if (tgt.checked) {
       op = 'Adicionando';
-      activeFilters.push(tgt.value)
+      activeFilters.add(tgt.value)
     }
     else{
       op = 'Removendo';
-      activeFilters.splice(activeFilters.indexOf(tgt.value), 1);
+      activeFilters.delete(tgt.value);
     }
     console.log(`${op} '${tgt.value}' à lista de categorias filtradas`);
     renderList();
