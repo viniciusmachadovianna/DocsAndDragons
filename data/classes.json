@@ -1,0 +1,14 @@
+[
+  {
+    "id": "mago",
+    "name": "Mago",
+    "codexCategory": "Class",
+    "tags" : [],
+    "description": "Um usuário de magia erudito capaz de manipular a realidade...",
+    "attributes": {
+      "hitDie": "d6",
+      "primaryAbility": "Inteligência",
+      "savingThrows": ["Inteligência", "Sabedoria"]
+    }
+  }
+]

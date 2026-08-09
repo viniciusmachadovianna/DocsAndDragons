@@ -1,0 +1,35 @@
+[
+  {
+    "id": "bola-de-fogo",
+    "name": "Bola' de Fogo",
+    "codexCategory": "Spell",
+    "tags" : [],
+    "description": "Uma rajada brilhante dispara do seu dedo...",
+    "attributes": {
+      "level": 3,
+      "school": "Evocação"
+    }
+  },
+  {
+    "id": "curar-ferimentos",
+    "name": "Curar Ferimentos",
+    "codexCategory": "Spell",
+    "tags" : [],
+    "description": "Uma criatura que você tocar recupera pontos de vida...",
+    "attributes": {
+      "level": 1,
+      "school": "Evocação"
+    }
+  },
+  {
+    "id": "protecao-contra-o-bem-e-mal",
+    "name": "Proteção contra o Bem e Mal",
+    "codexCategory": "Spell",
+    "tags" : [],
+    "description": "Até a magia acabar, uma criatura voluntária...",
+    "attributes": {
+      "level": 1,
+      "school": "Adivinhação"
+    }
+  }
+]
