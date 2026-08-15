@@ -1,4 +1,10 @@
+/* bg dark mode #1F1C0F */
+/* color dark mode #EAE2CE */
 body{
-    background-color: #F4ECD8;
+    background-color: #EAE2CE;
     color: #121212;
+}
+header{
+    display: flex;
+    flex-flow: row;
 }

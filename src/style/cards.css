@@ -1,0 +1,23 @@
+.card {
+  width: 320px;
+  max-width: 100%;
+  min-height: fit-content;
+  background: linear-gradient(180deg, #FEFCF0 0%, #F1F0DE 100%);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.35);
+  color: #333;
+  overflow: hidden;
+  padding: 5px;
+  margin: 5px;
+}
+.card:hover{
+  border: 1px solid #D8402F;
+  transition: .3s;
+}
+
+.item-card__header {
+    padding: 20px 22px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
