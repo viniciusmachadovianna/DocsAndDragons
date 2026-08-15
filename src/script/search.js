@@ -4,6 +4,7 @@
 const DOM = {
   searchInput: document.getElementById("keyword"),
   codex: document.getElementById("codex"),
+  template: document.getElementById('card-template'),
 }
 
 const activeFilters = new Set(["classes", "equipment", "spells"]);
@@ -13,7 +14,7 @@ const activeFilters = new Set(["classes", "equipment", "spells"]);
 async function loadCategoryItems(category) {
 
   try{
-    let origin = `/data/codexCategories/${category}.json`;
+    let origin = `/data/${category}.json`;
     const response = await fetch(origin);
     const items = await response.json();
 
@@ -25,23 +26,43 @@ async function loadCategoryItems(category) {
     
 }
 
-async function renderList(results=null) {
+function createCard(item){
 
-  if (!DOM.codex) return;
+  const cardClone = DOM.template.content.cloneNode(true);
+  const article = cardClone.querySelector('.card');
+
+  cardClone.querySelector('.card__title').textContent = item.name;
+  cardClone.querySelector('.card__badge').textContent = item.category || '';
+  cardClone.querySelector('.card__description').textContent = item.description || '';
+
+  if (article) {
+    article.classList.add(`card--${String(item.category || 'item').toLowerCase()}`);
+  }
+
+  return cardClone;
+
+}
+
+async function renderList(results=null) {
 
   if (DOM.searchInput.value.length > 0 && DOM.searchInput.value.length < 3) {
     return;
   }
 
   DOM.codex.innerHTML = '';
-  if (results){
-    console.log(results);
-    const html = results.map(item => {
-      const name = escapeHtml(item.name);
-      return `<li> ${item.name} | ${item.codexCategory}</li>`;
-    }).join('');
 
-    DOM.codex.innerHTML = html;
+  if (results){
+
+    const fragment = document.createDocumentFragment();
+
+    for (const result of results) {
+      const cardClone = createCard(result);
+      
+      fragment.appendChild(cardClone);
+    };
+
+    DOM.codex.appendChild(fragment);
+    return;
   }
   else{
     for (const category of activeFilters) {
@@ -64,7 +85,7 @@ async function handleSearchInput(rawKeyword){
 
   let results = filterItems(items, keyword);
 
-  renderList(results, keyword);
+  renderList(results);
 }
 
 function filterItems(items, keyword){
@@ -112,9 +133,10 @@ searchFilters.forEach(filter=> {
   filter.addEventListener('change', (event) => changeFilters(event.target));
 });
 
+let timer;
 DOM.searchInput.addEventListener('input', (event) => {
-  handleSearchInput(event.target.value);
+  clearTimeout(timer);
+  timer = setTimeout(() => handleSearchInput(event.target.value), 300);
 });
-;
 
-renderList();
+renderList(); //comment to see html card template

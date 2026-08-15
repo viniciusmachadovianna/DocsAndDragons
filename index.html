@@ -6,8 +6,13 @@
     <title>Docs and Dragons</title>
     <link rel="stylesheet" href="src/style/app.css">
     <link rel="stylesheet" href="src/style/reset.css">
+    <link rel="stylesheet" href="src/style/cards.css">
 </head>
 <body>
+    <header>
+        <!-- <img src="x" alt="Zenia logotype"> -->
+        <h1>DnD Zenia</h1>
+    </header>
     <section id="searchbar">
         <label for="keyword">buscar por...</label>
         <input id="keyword" type="text">
@@ -17,9 +22,22 @@
     </section>
 
     <section id="codex">
-
+        <template id="card-template">
+            <article class="card">
+                <header class="card__header">
+                <h3 class="card__title"></h3>
+                <span class="card__badge"></span>
+                </header>
+                <div class="card__body">
+                <p class="card__description"></p>
+                </div>
+            </article>
+        </template>
     </section>
 
+    <section>
+
+    </section>
     <script src="src/script/app.js"></script>
     <script src="src/script/search.js"></script>
 </body>
