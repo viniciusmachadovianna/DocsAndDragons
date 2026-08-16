@@ -1,0 +1,11 @@
+[
+  {
+    "id": "death",
+    "name": "Morte",
+    "codexCategory": "Rule",
+    "tags" : ["death","kill","die","unconscious"],
+    "description": "GYAAAAH THE LAST HIT",
+    "attributes": {
+    }
+  }
+]

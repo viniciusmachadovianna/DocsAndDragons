@@ -7,26 +7,30 @@
     <link rel="stylesheet" href="src/style/app.css">
     <link rel="stylesheet" href="src/style/reset.css">
     <link rel="stylesheet" href="src/style/cards.css">
+    <link rel="stylesheet" href="src/style/grid.css">
+    <link rel="stylesheet" href="src/style/constants.css">
 </head>
-<body>
+<body data-grid="square">
     <header>
-        <!-- <img src="x" alt="Zenia logotype"> -->
-        <h1>DnD Zenia</h1>
+        <section id="searchbar">
+            <label for="keyword"></label>
+            <input id="keyword" type="text" placeholder="buscar por...">
+            <div id="searchFilters">
+                <input type="checkbox" value="classes" checked>Classes
+                <input type="checkbox" value="equipment" checked>Equipamentos
+                <input type="checkbox" value="spells" checked>Magias
+                <input type="checkbox" value="rules" checked>Regras
+            </div>
+            <p>itens: <span id="totalFound">-</span>/<span id="totalItens">-</span></p>
+        </section>
     </header>
-    <section id="searchbar">
-        <label for="keyword">buscar por...</label>
-        <input id="keyword" type="text">
-        <input type="checkbox" value="classes" checked>Classes
-        <input type="checkbox" value="equipment" checked>Equipamentos
-        <input type="checkbox" value="spells" checked>Spells
-    </section>
 
     <section id="codex">
         <template id="card-template">
             <article class="card">
                 <header class="card__header">
                 <h3 class="card__title"></h3>
-                <span class="card__badge"></span>
+                <span class="card__category"></span>
                 </header>
                 <div class="card__body">
                 <p class="card__description"></p>
@@ -35,9 +39,8 @@
         </template>
     </section>
 
-    <section>
-
-    </section>
+    <!-- <dialog open>teste dialog</dialog> -->
+     <footer>v0.2</footer>
     <script src="src/script/app.js"></script>
     <script src="src/script/search.js"></script>
 </body>

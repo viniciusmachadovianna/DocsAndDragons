@@ -5,9 +5,11 @@ const DOM = {
   searchInput: document.getElementById("keyword"),
   codex: document.getElementById("codex"),
   template: document.getElementById('card-template'),
+  totalFound: document.getElementById('totalFound'),
+  totalItens: document.getElementById('totalItens'),
 }
 
-const activeFilters = new Set(["classes", "equipment", "spells"]);
+const activeFilters = new Set(["classes", "equipment", "spells", "rules"]);
 
 // --- MAIN --- //
 
@@ -30,93 +32,110 @@ function createCard(item){
 
   const cardClone = DOM.template.content.cloneNode(true);
   const article = cardClone.querySelector('.card');
+  const titleNode = cardClone.querySelector('.card__title');
+  const badgeNode = cardClone.querySelector('.card__category');
+  const descriptionNode = cardClone.querySelector('.card__description');
 
-  cardClone.querySelector('.card__title').textContent = item.name;
-  cardClone.querySelector('.card__badge').textContent = item.category || '';
-  cardClone.querySelector('.card__description').textContent = item.description || '';
+  if (titleNode) titleNode.textContent = item.name || '';
+  if (badgeNode) badgeNode.textContent = item.codexCategory || '';
+  if (descriptionNode) descriptionNode.textContent = item.description || '';
 
   if (article) {
-    article.classList.add(`card--${String(item.category || 'item').toLowerCase()}`);
+    const categoryKey = (item.codexCategory || item.category || 'item').toLowerCase();
+    article.classList.add(`card--${categoryKey}`);
   }
 
   return cardClone;
-
 }
 
-async function renderList(results=null) {
+async function renderDefaultCatalog() {
+  const fragment = document.createDocumentFragment();
 
-  if (DOM.searchInput.value.length > 0 && DOM.searchInput.value.length < 3) {
-    return;
+  let totalItens = 0;
+  for (const category of activeFilters) {
+    const categoryItemsInfo = await loadCategoryItems(category);
+
+    for (const itemInfo of categoryItemsInfo) {
+      fragment.appendChild(createCard(itemInfo));
+    }
+    totalItens += categoryItemsInfo.length;
   }
+
+  DOM.totalItens.textContent = totalItens;
+  DOM.codex.replaceChildren(fragment);
+}
+
+async function renderSearchResults(results = []) {
 
   DOM.codex.innerHTML = '';
 
-  if (results){
-
-    const fragment = document.createDocumentFragment();
-
-    for (const result of results) {
-      const cardClone = createCard(result);
-      
-      fragment.appendChild(cardClone);
-    };
-
-    DOM.codex.appendChild(fragment);
+  if (!Array.isArray(results) || results.length === 0) {
     return;
   }
-  else{
-    for (const category of activeFilters) {
-      
-      const categoryItemsInfo =  await loadCategoryItems(category);
-      
-      for (const itemInfo of categoryItemsInfo) {
-        let card = `<li> ${itemInfo.name} | ${itemInfo.codexCategory}</li>`;
-        DOM.codex.innerHTML += card;
-      }
-    }
+
+  const fragment = document.createDocumentFragment();
+  
+  for (const result of results) {
+    fragment.appendChild(createCard(result));
   }
+  
+  DOM.totalFound.textContent = results.length;
+  DOM.codex.appendChild(fragment);
 }
 
-async function handleSearchInput(rawKeyword){
-  
-  const keyword = normalizeText(rawKeyword);
+async function handleSearchInput(rawKeyword) {
+  const keyword = normalizeText(rawKeyword.trim());
+
+  if (!keyword) {
+    renderDefaultCatalog();
+    return;
+  }
+
+  if (keyword.length < 3) {
+    DOM.codex.innerHTML = '';
+    return;
+  }
+
   const categoryResults = await Promise.all([...activeFilters].map(loadCategoryItems));
   const items = categoryResults.flat();
+  const results = filterItems(items, keyword);
+  DOM.totalItens.textContent = results.length;
 
-  let results = filterItems(items, keyword);
-
-  renderList(results);
+  renderSearchResults(results);
 }
 
-function filterItems(items, keyword){
-
-  return items.filter(item => {
-    const itemNormalizedName = normalizeText(item.name || "");
-    return itemNormalizedName.includes(keyword);
+function filterItems(items, keyword) {
+  return items.filter((item) => {
+    const itemNormalizedName = normalizeText(item.name || '');
+    const itemNormalizedDescription = normalizeText(item.description || '');
+    return itemNormalizedName.includes(keyword) || itemNormalizedDescription.includes(keyword);
   });
 }
 
 // --- AUX --- //
 
-function changeFilters(tgt){
+function changeFilters(tgt) {
+  if (tgt.checked) activeFilters.add(tgt.value);
+  else activeFilters.delete(tgt.value);
 
-  //TODO deve respeitar o input
-    if (tgt.checked) activeFilters.add(tgt.value);
-    else activeFilters.delete(tgt.value);
-    renderList();
+  const keyword = DOM.searchInput.value.trim();
+
+  if (keyword && normalizeText(keyword).length >= 3) {
+    handleSearchInput(keyword);
+    return;
+  }
+
+  renderDefaultCatalog();
 }
 
 function normalizeText(txt) {
-  
-  return txt
+  return String(txt)
     .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 }
 
-
 function escapeHtml(input) {
-
   return String(input)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -127,9 +146,9 @@ function escapeHtml(input) {
 
 // --- HANDLERS --- //
 
-const searchFilters = document.getElementById('searchbar').querySelectorAll('input[type=checkbox]')
+const searchFilters = document.getElementById('searchbar').querySelectorAll('input[type=checkbox]');
 
-searchFilters.forEach(filter=> {
+searchFilters.forEach((filter) => {
   filter.addEventListener('change', (event) => changeFilters(event.target));
 });
 
@@ -139,4 +158,4 @@ DOM.searchInput.addEventListener('input', (event) => {
   timer = setTimeout(() => handleSearchInput(event.target.value), 300);
 });
 
-renderList(); //comment to see html card template
+renderDefaultCatalog();
