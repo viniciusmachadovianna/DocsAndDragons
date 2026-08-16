@@ -1,10 +1,37 @@
-/* bg dark mode #1F1C0F */
-/* color dark mode #EAE2CE */
+@import './constants.css';
+
 body{
-    background-color: #EAE2CE;
+    background-color: var(--bg);
     color: #121212;
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 100vdh;
+    flex-flow: column;
+    align-items: center;
 }
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  /* background: linear-gradient(0deg, var(--bg-light) 0%, transparent 50%, var(--bg-light) 100%); */
+  background: linear-gradient(0deg, var(--bg)  0%, transparent 40%, transparent 60%, var(--bg) 100%);
+  pointer-events: none;
+}
+
 header{
     display: flex;
     flex-flow: row;
+}
+#searchbar{
+    background-color: #D8402F;
+    &>#keyword{
+        width: 100%;
+    }
+}
+footer{
+    position: fixed;
+    bottom: 0px;
 }

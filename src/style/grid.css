@@ -1,0 +1,64 @@
+@import "./constants.css";
+
+[data-grid="square"]{
+    --gridlineColor: #33333311;
+    background-image: 
+        linear-gradient(0deg, transparent 24%, var(--gridlineColor) 25%, var(--gridlineColor) 26%, transparent 27%,transparent 74%, var(--gridlineColor) 75%, var(--gridlineColor) 76%, transparent 77%,transparent),
+        linear-gradient(90deg, transparent 24%, var(--gridlineColor) 25%, var(--gridlineColor) 26%, transparent 27%,transparent 74%, var(--gridlineColor) 75%, var(--gridlineColor) 76%, transparent 77%,transparent);
+    background-size: 64px 64px;
+}
+
+[data-grid="dot"]{
+  background-image: radial-gradient(#33333377 1px, var(--bg-light) 1px);
+  background-size: 32px 32px;
+}
+
+[data-grid="hex"]{
+    --border: #33333311;
+    --bg: var(--bg-light);
+    background: radial-gradient(
+        circle farthest-side at 0% 50%,
+        var(--bg) 23.5%,
+        rgba(57, 212, 22, 0) 0
+        ) 21px 30px,
+        radial-gradient(
+        circle farthest-side at 0% 50%,
+        var(--border) 24%,
+        transparent 0
+        )
+        19px 30px,
+        linear-gradient(
+            var(--bg) 14%,
+            transparent 0,
+            transparent 85%,
+            var(--bg) 0
+        )
+        0 0,
+        linear-gradient(
+            150deg,
+            var(--bg) 24%,
+            var(--border) 0,
+            var(--border) 26%,
+            transparent 0,
+            transparent 74%,
+            var(--border) 0,
+            var(--border) 76%,
+            var(--bg) 0
+        )
+        0 0,
+        linear-gradient(
+            30deg,
+            var(--bg) 24%,
+            var(--border) 0,
+            var(--border) 26%,
+            transparent 0,
+            transparent 74%,
+            var(--border) 0,
+            var(--border) 76%,
+            var(--bg) 0
+        )
+        0 0,
+    linear-gradient(90deg, var(--border) 2%, var(--bg) 0, var(--bg) 98%, var(--border) 0%) 0 0
+      var(--bg);
+  background-size: 40px 60px;
+}
