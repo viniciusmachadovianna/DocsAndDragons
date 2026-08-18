@@ -10,22 +10,23 @@ const DOM = {
 }
 
 const activeFilters = new Set(["classes", "equipment", "spells", "rules"]);
-
+let database = []
 // --- MAIN --- //
 
-async function loadCategoryItems(category) {
+async function initApp(){
 
-  try{
-    let origin = `/data/${category}.json`;
-    const response = await fetch(origin);
+  await loadCategoryItems();
+  renderDefaultCatalog();
+}
+
+async function loadCategoryItems() {
+
+    for (const category of activeFilters) {
+    const response = await fetch(`/data/${category}.json`);
     const items = await response.json();
 
-    return items;
+    database.push(...items);
   }
-  catch(e){
-    throw new Error(e);
-  }
-    
 }
 
 function createCard(item){
@@ -49,19 +50,14 @@ function createCard(item){
 }
 
 async function renderDefaultCatalog() {
+
   const fragment = document.createDocumentFragment();
 
-  let totalItens = 0;
-  for (const category of activeFilters) {
-    const categoryItemsInfo = await loadCategoryItems(category);
-
-    for (const itemInfo of categoryItemsInfo) {
-      fragment.appendChild(createCard(itemInfo));
-    }
-    totalItens += categoryItemsInfo.length;
+  for (const item of database) {
+    fragment.appendChild(createCard(item));
   }
 
-  DOM.totalItens.textContent = totalItens;
+  DOM.totalItens.textContent = database.length;
   DOM.codex.replaceChildren(fragment);
 }
 
@@ -96,16 +92,17 @@ async function handleSearchInput(rawKeyword) {
     return;
   }
 
-  const categoryResults = await Promise.all([...activeFilters].map(loadCategoryItems));
-  const items = categoryResults.flat();
-  const results = filterItems(items, keyword);
+  const results = filterItems(keyword);
+  DOM.totalFound.textContent = results.length;
   DOM.totalItens.textContent = results.length;
+
 
   renderSearchResults(results);
 }
 
-function filterItems(items, keyword) {
-  return items.filter((item) => {
+function filterItems(keyword) {
+  
+  return database.filter((item) => {
     const itemNormalizedName = normalizeText(item.name || '');
     const itemNormalizedDescription = normalizeText(item.description || '');
     return itemNormalizedName.includes(keyword) || itemNormalizedDescription.includes(keyword);
@@ -114,9 +111,11 @@ function filterItems(items, keyword) {
 
 // --- AUX --- //
 
-function changeFilters(tgt) {
+async function changeFilters(tgt) { //checkboxes bugadas
   if (tgt.checked) activeFilters.add(tgt.value);
   else activeFilters.delete(tgt.value);
+
+  await loadCategoryItems();
 
   const keyword = DOM.searchInput.value.trim();
 
@@ -158,4 +157,4 @@ DOM.searchInput.addEventListener('input', (event) => {
   timer = setTimeout(() => handleSearchInput(event.target.value), 300);
 });
 
-renderDefaultCatalog();
+initApp();
